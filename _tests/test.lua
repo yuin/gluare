@@ -1,5 +1,5 @@
 local re = require("re")
-local a, b, i, s, t
+local a, b, c, i, s, t
 
 -- quote
 assert(re.quote("^$.?a") == [[\^\$\.\?a]])
@@ -65,8 +65,8 @@ assert(re.match("$$$ hello", "z") == nil)
 assert(re.match("$$$ hello", "\\w+") == "hello")
 assert(re.match("hello world", "\\w+", 6) == "world")
 assert(re.match("hello world", "\\w+", -5) == "world")
-a, b = re.match("from=world", "(\\w+)=(\\w+)")
-assert(a == "from" and b == "world")
+a, b, c = re.match("from=world", "(\\w+)=(\\w+)")
+assert(b == "from" and c == "world")
 
 local results = { re.match("123ab123", "([0-9]+)([a-z]+)([0-9]+)|(bc)([0-9]+)") }
 assert(results[2] == "123" and results[3] == "ab" and results[4] == "123")
