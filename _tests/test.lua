@@ -19,6 +19,8 @@ assert(not pcall(re.find, "aaa", "(aaaa"))
 assert(re.find("aaaa", "(b|c)*") == nil)
 a, b, s = re.find("abcd efgh ijk", "i([jk])")
 assert(a == 11 and b == 12 and s == "j")
+a, b = re.find("m", "m")
+assert(a == 1 and b == 1)
 
 -- gsub
 assert(not pcall(re.gsub, "aaa", "(aaaa", "${1}"))
@@ -65,3 +67,6 @@ assert(re.match("hello world", "\\w+", 6) == "world")
 assert(re.match("hello world", "\\w+", -5) == "world")
 a, b = re.match("from=world", "(\\w+)=(\\w+)")
 assert(a == "from" and b == "world")
+
+local results = { re.match("123ab123", "([0-9]+)([a-z]+)([0-9]+)|(bc)([0-9]+)") }
+assert(results[2] == "123" and results[3] == "ab" and results[4] == "123")

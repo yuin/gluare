@@ -57,7 +57,7 @@ func reFind(L *lua.LState) int {
 	}
 	stroffset := str[init:]
 	positions := re.FindStringSubmatchIndex(stroffset)
-	if positions == nil || (len(positions) > 1 && positions[2] < 0) {
+	if positions == nil || (len(positions) > 2 && positions[2] < 0) {
 		L.Push(lua.LNil)
 		return 1
 	}
@@ -246,22 +246,16 @@ func reMatch(L *lua.LState) int {
 		L.RaiseError(err.Error())
 	}
 	str = str[offset:]
-	subs := re.FindStringSubmatchIndex(str)
-	nsubs := len(subs) / 2
-	switch nsubs {
-	case 0:
+	subs := re.FindStringSubmatch(str)
+	if subs == nil {
 		L.Push(lua.LNil)
 		return 1
-	case 1:
-		L.Push(lua.LString(str[subs[0]:subs[1]]))
-		return 1
-	default:
-		for i := 2; i < len(subs); i += 2 {
-			L.Push(lua.LString(str[subs[i]:subs[i+1]]))
+	} else {
+		for _, sub := range subs {
+			L.Push(lua.LString(sub))
 		}
-		return nsubs - 1
+		return len(subs)
 	}
-
 }
 
 func luaIndex2StringIndex(str string, i int, start bool) int {
