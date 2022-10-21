@@ -1,4 +1,4 @@
-module gluare
+module github.com/sunshine69/gluare
 
 go 1.19
 
