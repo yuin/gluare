@@ -57,7 +57,7 @@ func reFind(L *lua.LState) int {
 	}
 	stroffset := str[init:]
 	positions := re.FindStringSubmatchIndex(stroffset)
-	if positions == nil || (len(positions) > 1 && positions[2] < 0) {
+	if positions == nil || (len(positions) > 2 && positions[2] < 0) {
 		L.Push(lua.LNil)
 		return 1
 	}
