@@ -20,6 +20,9 @@ assert(re.find("aaaa", "(b|c)*") == nil)
 a, b, s = re.find("abcd efgh ijk", "i([jk])")
 assert(a == 11 and b == 12 and s == "j")
 
+a, b, s = re.find("Day 22/10/2022 ijk", [[([\d]+)/[\d]+/[\d]+]])
+assert(a == 5 and b == 6 and s == "22" )
+
 -- gsub
 assert(not pcall(re.gsub, "aaa", "(aaaa", "${1}"))
 s, a = re.gsub("aaaa", "bbbb", "")
